@@ -62,17 +62,17 @@ class CmqttdUtilityTest(unittest.TestCase):
         self.assertEqual(ga, cmqttd.get_topic_group_address(light_topic))
 
         # Generating a set topic
-        set_topic = cmqttd.set_topic(ga)
+        set_topic = cmqttd.set_topic(ga, None)
         self.assertEqual(light_topic, set_topic[:light_topic_len])
         self.assertEqual(ga, cmqttd.get_topic_group_address(set_topic))
 
         # Generating a state topic
-        state_topic = cmqttd.state_topic(ga)
+        state_topic = cmqttd.state_topic(ga, None)
         self.assertEqual(light_topic, state_topic[:light_topic_len])
         self.assertEqual(ga, cmqttd.get_topic_group_address(state_topic))
 
         # Generating a conf topic
-        conf_topic = cmqttd.conf_topic(ga)
+        conf_topic = cmqttd.conf_topic(ga, None)
         self.assertEqual(light_topic, conf_topic[:light_topic_len])
         self.assertEqual(ga, cmqttd.get_topic_group_address(conf_topic))
 
@@ -83,10 +83,10 @@ class CmqttdUtilityTest(unittest.TestCase):
 
         # Binary sensors are read only, so get_topic_group_address doesn't
         # support them.
-        bin_state_topic = cmqttd.bin_sensor_state_topic(ga)
+        bin_state_topic = cmqttd.bin_sensor_state_topic(ga, None)
         self.assertTrue(bin_topic, bin_state_topic[:bin_topic_len])
 
-        bin_conf_topic = cmqttd.bin_sensor_conf_topic(ga)
+        bin_conf_topic = cmqttd.bin_sensor_conf_topic(ga, None)
         self.assertTrue(bin_topic, bin_conf_topic[:bin_topic_len])
 
         # Uniqueness check

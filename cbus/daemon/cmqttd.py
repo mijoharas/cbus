@@ -59,35 +59,35 @@ def get_topic_group_address(topic: Text) -> int:
     return ga
 
 
-def light_group_address_topic_base(group_addr: int, cbus_name: Text) -> Text:
+def light_group_address_topic_base(group_addr: int, cbus_name: Optional[Text]) -> Text:
     strings = [_LIGHT_TOPIC_PREFIX, cbus_name, str(group_addr)]
     return '_'.join([x for x in strings if x])
 
-def bin_sensor_group_address_topic_base(group_addr: int, cbus_name: Text) -> Text:
+def bin_sensor_group_address_topic_base(group_addr: int, cbus_name: Optional[Text]) -> Text:
     strings = [_BINSENSOR_TOPIC_PREFIX, cbus_name, str(group_addr)]
     return '_'.join([x for x in strings if x])
 
-def set_topic(group_addr: int, cbus_name: Text) -> Text:
+def set_topic(group_addr: int, cbus_name: Optional[Text]) -> Text:
     """Gets the Set topic for a group address."""
     return light_group_address_topic_base(group_addr, cbus_name) + _TOPIC_SET_SUFFIX
 
 
-def state_topic(group_addr: int, cbus_name: Text) -> Text:
+def state_topic(group_addr: int, cbus_name: Optional[Text]) -> Text:
     """Gets the State topic for a group address."""
     return light_group_address_topic_base(group_addr, cbus_name) + _TOPIC_STATE_SUFFIX
 
 
-def conf_topic(group_addr: int, cbus_name: Text) -> Text:
+def conf_topic(group_addr: int, cbus_name: Optional[Text]) -> Text:
     """Gets the Config topic for a group address."""
     return light_group_address_topic_base(group_addr, cbus_name) + _TOPIC_CONF_SUFFIX
 
 
-def bin_sensor_state_topic(group_addr: int, cbus_name: Text) -> Text:
+def bin_sensor_state_topic(group_addr: int, cbus_name: Optional[Text]) -> Text:
     """Gets the Binary Sensor State topic for a group address."""
     return bin_sensor_group_address_topic_base(group_addr, cbus_name) + _TOPIC_STATE_SUFFIX
 
 
-def bin_sensor_conf_topic(group_addr: int, cbus_name: Text) -> Text:
+def bin_sensor_conf_topic(group_addr: int, cbus_name: Optional[Text]) -> Text:
     """Gets the Binary Sensor Config topic for a group address."""
     return bin_sensor_group_address_topic_base(group_addr, cbus_name) + _TOPIC_CONF_SUFFIX
 
