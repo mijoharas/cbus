@@ -134,7 +134,7 @@ class MqttClient(mqtt.Client):
     def on_connect(self, client, userdata: CBusHandler, flags, rc):
         logger.info('Connected to MQTT broker')
         userdata.mqtt_api = self
-        self.subscribe([(set_topic(ga), 2) for ga in ga_range()])
+        self.subscribe([(set_topic(ga, self.group_name), 2) for ga in ga_range()])
         self.publish_all_lights(userdata.labels)
 
     def on_message(self, client, userdata: CBusHandler, msg: mqtt.MQTTMessage):
