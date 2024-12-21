@@ -49,12 +49,14 @@ def ga_range():
     return range(MIN_GROUP_ADDR, MAX_GROUP_ADDR + 1)
 
 
-def get_topic_group_address(topic: Text) -> int:
+def get_topic_group_address(topic: Text, cbus_name: Optional[Text]) -> int:
     """Gets the group address for the given topic."""
     if not topic.startswith(_LIGHT_TOPIC_PREFIX):
         raise ValueError(
             f'Invalid topic {topic}, must start with {_LIGHT_TOPIC_PREFIX}')
-    ga = int(topic[len(_LIGHT_TOPIC_PREFIX):].split('/', maxsplit=1)[0])
+    base_prefix = [_LIGHT_TOPIC_PREFIX, cbus_name, '']
+    joined_prefix = '_'.join([x for x in base_prefix if x]) + '_'
+    ga = int(topic[len(joined_prefix):].split('/', maxsplit=1)[0])
     check_ga(ga)
     return ga
 
@@ -144,7 +146,7 @@ class MqttClient(mqtt.Client):
             return
 
         try:
-            ga = get_topic_group_address(msg.topic)
+            ga = get_topic_group_address(msg.topic, self.group_name)
         except ValueError:
             # Invalid group address
             logging.error(f'Invalid group address in topic {msg.topic}')

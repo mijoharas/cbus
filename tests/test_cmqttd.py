@@ -59,22 +59,22 @@ class CmqttdUtilityTest(unittest.TestCase):
         bin_topic_len = len(bin_topic)
 
         # base topic path -> ga
-        self.assertEqual(ga, cmqttd.get_topic_group_address(light_topic))
+        self.assertEqual(ga, cmqttd.get_topic_group_address(light_topic, None))
 
         # Generating a set topic
         set_topic = cmqttd.set_topic(ga, None)
         self.assertEqual(light_topic, set_topic[:light_topic_len])
-        self.assertEqual(ga, cmqttd.get_topic_group_address(set_topic))
+        self.assertEqual(ga, cmqttd.get_topic_group_address(set_topic, None))
 
         # Generating a state topic
         state_topic = cmqttd.state_topic(ga, None)
         self.assertEqual(light_topic, state_topic[:light_topic_len])
-        self.assertEqual(ga, cmqttd.get_topic_group_address(state_topic))
+        self.assertEqual(ga, cmqttd.get_topic_group_address(state_topic, None))
 
         # Generating a conf topic
         conf_topic = cmqttd.conf_topic(ga, None)
         self.assertEqual(light_topic, conf_topic[:light_topic_len])
-        self.assertEqual(ga, cmqttd.get_topic_group_address(conf_topic))
+        self.assertEqual(ga, cmqttd.get_topic_group_address(conf_topic, None))
 
         # Ensure all the topics are unique
         self.assertNotEqual(set_topic, state_topic)
@@ -99,7 +99,7 @@ class CmqttdUtilityTest(unittest.TestCase):
         'light/my_light',
     ])
     def test_invalid_topic_group_address(self, topic):
-        self.assertRaises(ValueError, cmqttd.get_topic_group_address, topic)
+        self.assertRaises(ValueError, cmqttd.get_topic_group_address, topic, None)
 
     @parameterized.expand([
         ('unix newlines', 'my_username\nmy_password\n'),
