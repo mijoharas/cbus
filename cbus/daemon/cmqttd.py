@@ -157,9 +157,9 @@ class MqttClient(mqtt.Client):
             logging.error(f'JSON parse error in {msg.topic}', exc_info=e)
             return
         light_on = payload['state'].upper() == 'ON'
-        brightness = int(payload.get('brightness', 255))
+        brightness: int = int(payload.get('brightness', 255))
         if brightness < 0:
-            brightness = 0.
+            brightness = 0
         if brightness > 255:
             brightness = 255
         transition_time = int(payload.get('transition', 0))
