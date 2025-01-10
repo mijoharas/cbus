@@ -82,6 +82,11 @@ else
     echo "${CMQTTD_PROJECT_FILE} not found; using generated labels."
 fi
 
+if [ -e "${CBUS_NETWORK_NUMBER}" ]; then
+  echo "Naming this network ${CBUS_NETWORK_NUMBER}"
+  CMQTTD_ARGS="${CMQTTD_ARGS} --name ${CBUS_NETWORK_NUMBER}"
+fi
+
 echo ""
 
 # Announce what we think local time is on start-up. This will be sent to the C-Bus network.

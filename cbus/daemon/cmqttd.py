@@ -386,11 +386,13 @@ async def _main():
              'supply the public key (-k). If this file is encrypted, Python '
              'will prompt for the password at the command-line.')
 
-    group.add_argument('-n', '--name', metavar='NETWORK_NUMBER',
-                       dest='cbus_network_name', default=None,
-                       help='Optional additional suffix to be added to your cbus '
-                       'devices and to distinguish your different networks. '
-                       'Probably unneeded unless you are running multiple networks.')
+    group.add_argument(
+        '-n', '--name',
+        metavar='NETWORK_NUMBER',
+        dest='cbus_network_name', default=None,
+        help='Optional additional suffix to be added to your cbus '
+             'devices and to distinguish your different networks. '
+             'Probably unneeded unless you are running multiple networks.')
 
     group = parser.add_argument_group(
         'C-Bus PCI options', 'You must specify exactly one of these options:')
