@@ -44,6 +44,7 @@ echo "CMQTTD_PROJECT_FILE = $CMQTTD_PROJECT_FILE"
 echo "CBUS_TIMESYNC = $CBUS_TIMESYNC"
 echo "CBUS_CLOCK = $CBUS_CLOCK"
 echo "CMQTTD_LOG_LEVEL = $CMQTTD_LOG_LEVEL"
+echo "CBUS_NETWORK_NUMBER = $CBUS_NETWORK_NUMBER"
 
 # Create the auth file
 echo "Creating file /etc/cmqttd/auth"
@@ -145,9 +146,9 @@ else
     echo "${CMQTTD_PROJECT_FILE} not found; using generated labels."
 fi
 
-if [ "${CBUS_NETWORK_NUMBER}" = "null" ]; then
+if [ "${CBUS_NETWORK_NUMBER}" == "null" ]; then
   echo "No cbus network number was supplied."
-elif [ -e "${CBUS_NETWORK_NUMBER}" ]; then
+else
   echo "Naming this network ${CBUS_NETWORK_NUMBER}"
   CMQTTD_ARGS="${CMQTTD_ARGS} --name ${CBUS_NETWORK_NUMBER}"
 fi
