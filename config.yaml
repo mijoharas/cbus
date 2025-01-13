@@ -1,5 +1,5 @@
 name: "cbus2mqtt"
-description: "Home Assistant Add-on that runs cmqttd (https://cbus.readthedocs.io/en/latest/cmqttd.html)"
+description: "Home Assistant Add-on that runs cmqttd (https://cbus.readthedocs.io/en/latest/cmqttd.html) - multi-network-version"
 version: "0.6.1"
 slug: "cbus2mqtt"
 url: "https://github.com/mijoharas/ha-cbus2mqtt/cbus2mqtt"
@@ -12,9 +12,6 @@ uart: true
 arch:
   - aarch64
   - amd64
-  - armhf
-  - armv7
-  - i386
 map:
   - share:rw
 options:

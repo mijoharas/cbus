@@ -47,6 +47,7 @@ echo "CMQTTD_LOG_LEVEL = $CMQTTD_LOG_LEVEL"
 
 # Create the auth file
 echo "Creating file /etc/cmqttd/auth"
+mkdir -p /etc/cmqttd/
 echo -e "$MQTT_USER\n$MQTT_PASSWORD" > /etc/cmqttd/auth
 
 
