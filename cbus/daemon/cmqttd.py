@@ -129,6 +129,7 @@ class CBusHandler(PCIProtocol):
 
 
 class MqttClient(mqtt.Client):
+    # group name is the name of the network
     def set_group_name(self, group_name: Text):
         self.group_name = group_name
 
@@ -469,6 +470,7 @@ async def _main():
             factory, addr[0], int(addr[1]))
 
     mqtt_client = MqttClient(userdata=protocol)
+    mqtt_client.set_group_name(option.cbus_network_name)
     if option.broker_auth:
         read_auth(mqtt_client, option.broker_auth)
     if option.broker_disable_tls:
