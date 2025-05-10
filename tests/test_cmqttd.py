@@ -50,31 +50,31 @@ class CmqttdUtilityTest(unittest.TestCase):
         for ga in valid_ga:
             check_ga(ga)  # throws exception on error
 
-    @parameterized.expand([(ga,) for ga in cmqttd.ga_range()])
-    def test_valid_topic_group_address(self, ga):
+    @parameterized.expand([(ga, cbus_name) for ga in cmqttd.ga_range() for cbus_name in [None, "1", "2"]])
+    def test_valid_topic_group_address(self, ga, cbus_name):
         # name is also the expected group address number
-        light_topic = f'homeassistant/light/cbus_{ga}'
+        light_topic = f'homeassistant/light/cbus{("_" + cbus_name) if cbus_name else ""}_{ga}'
         light_topic_len = len(light_topic)
-        bin_topic = f'homeassistant/binary_sensor/cbus_{ga}'
+        bin_topic = f'homeassistant/binary_sensor/cbus{("_" + cbus_name) if cbus_name else ""}_{ga}'
         bin_topic_len = len(bin_topic)
 
         # base topic path -> ga
-        self.assertEqual(ga, cmqttd.get_topic_group_address(light_topic))
+        self.assertEqual(ga, cmqttd.get_topic_group_address(light_topic, cbus_name))
 
         # Generating a set topic
-        set_topic = cmqttd.set_topic(ga)
+        set_topic = cmqttd.set_topic(ga, cbus_name)
         self.assertEqual(light_topic, set_topic[:light_topic_len])
-        self.assertEqual(ga, cmqttd.get_topic_group_address(set_topic))
+        self.assertEqual(ga, cmqttd.get_topic_group_address(set_topic, cbus_name))
 
         # Generating a state topic
-        state_topic = cmqttd.state_topic(ga)
+        state_topic = cmqttd.state_topic(ga, cbus_name)
         self.assertEqual(light_topic, state_topic[:light_topic_len])
-        self.assertEqual(ga, cmqttd.get_topic_group_address(state_topic))
+        self.assertEqual(ga, cmqttd.get_topic_group_address(state_topic, cbus_name))
 
         # Generating a conf topic
-        conf_topic = cmqttd.conf_topic(ga)
+        conf_topic = cmqttd.conf_topic(ga, cbus_name)
         self.assertEqual(light_topic, conf_topic[:light_topic_len])
-        self.assertEqual(ga, cmqttd.get_topic_group_address(conf_topic))
+        self.assertEqual(ga, cmqttd.get_topic_group_address(conf_topic, cbus_name))
 
         # Ensure all the topics are unique
         self.assertNotEqual(set_topic, state_topic)
@@ -83,10 +83,10 @@ class CmqttdUtilityTest(unittest.TestCase):
 
         # Binary sensors are read only, so get_topic_group_address doesn't
         # support them.
-        bin_state_topic = cmqttd.bin_sensor_state_topic(ga)
+        bin_state_topic = cmqttd.bin_sensor_state_topic(ga, cbus_name)
         self.assertTrue(bin_topic, bin_state_topic[:bin_topic_len])
 
-        bin_conf_topic = cmqttd.bin_sensor_conf_topic(ga)
+        bin_conf_topic = cmqttd.bin_sensor_conf_topic(ga, cbus_name)
         self.assertTrue(bin_topic, bin_conf_topic[:bin_topic_len])
 
         # Uniqueness check
@@ -99,7 +99,7 @@ class CmqttdUtilityTest(unittest.TestCase):
         'light/my_light',
     ])
     def test_invalid_topic_group_address(self, topic):
-        self.assertRaises(ValueError, cmqttd.get_topic_group_address, topic)
+        self.assertRaises(ValueError, cmqttd.get_topic_group_address, topic, None)
 
     @parameterized.expand([
         ('unix newlines', 'my_username\nmy_password\n'),

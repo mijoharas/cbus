@@ -16,3 +16,6 @@ example.*
 home.*
 img
 .coverage
+
+.tool-versions
+data/*
